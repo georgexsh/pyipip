@@ -1,0 +1,12 @@
+*.pyc
+tags
+.cache
+
+venv
+dev_venv
+*.egg-info
+dist
+build
+
+*.dat
+*.datx

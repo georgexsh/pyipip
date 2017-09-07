@@ -1,0 +1,2 @@
+-e git+https://github.com/myiwen/ipip.git@c5aea92c14e0f900020ffb06aa8fcec23f87e55c#egg=ipip-master
+17MonIP==0.2.7
