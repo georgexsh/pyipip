@@ -34,7 +34,7 @@ class IPIPDatabase(object):
         self.filename = os.path.abspath(filename)
         self._ranges = array.array('I')
         self._offsets = array.array('I')
-        self._strings = None
+        self._strings = ''
         self.load_db()
 
     def __repr__(self):
@@ -64,26 +64,32 @@ class IPIPDatabase(object):
                         )
 
     def _load_db(self, buff, index_size, text_length_size):
+        ns_buff = []
+        ns_offset = 0
+        offset_old_to_new= {}
         text_start = unpack_uint32_big(buff[:4]) - index_size
-        self._strings = buff[text_start:]
         offset = index_size + 4
         while offset < text_start:
             ip_range = unpack_uint32_big(buff[offset:offset+4])
             offset += 4
-            text_offset = unpack_uint32_little(buff[offset:offset+3] + b'\0')
+            self._ranges.append(ip_range)
+            text_offset = unpack_uint32_little(buff[offset:offset+3] + b'\0') + text_start
             offset += 3
             if text_length_size == 1:
                 text_length = unpack_uint8(buff[offset])
             elif text_length_size == 2:
                 text_length = unpack_uint16_big(buff[offset:offset+2])
             offset += text_length_size
-            self._ranges.append(ip_range)
-            self._offsets.append(text_offset)
-            self._offsets.append(text_offset + text_length)
+            if text_offset not in offset_old_to_new:
+                s = buff[text_offset:text_offset+text_length].decode('utf-8')
+                offset_old_to_new[text_offset] = (ns_offset, ns_offset+len(s))
+                ns_buff.append(s)
+                ns_offset += len(s)
+            self._offsets.extend(offset_old_to_new[text_offset])
+        self._strings = ''.join(ns_buff)
 
     def lookup(self, ip):
         n = unpack(">L", inet_aton(ip))[0]
         i = bisect_left(self._ranges, n)
-        s = self._strings[self._offsets[2*i]:self._offsets[2*i+1]]
-        return s.decode('utf8')
+        return self._strings[self._offsets[2*i]:self._offsets[2*i+1]]
 
