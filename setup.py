@@ -1,8 +1,15 @@
 from setuptools import setup
 
+
+def read_readme():
+    with open('README.rst', 'rb') as f:
+        return f.read().decode('utf-8')
+
+
 setup(name='pyipip',
-      version='0.1',
+      version='0.1.1',
       description="ipip.net IP address geolocation database Python library",
+      long_description=read_readme(),
       url='https://github.com/georgexsh/pyipip',
       author='georgexsh',
       author_email='georgexsh@gmail.com',
@@ -17,5 +24,4 @@ setup(name='pyipip',
           'Programming Language :: Python :: 3',
           'Programming Language :: Python :: Implementation :: PyPy',
       ],
-      keywords='ipip.net geoip',
      )
