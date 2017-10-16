@@ -1,7 +1,7 @@
 .PHONY: clean test bench package publish
 
 help:
-	@echo targets: test bench clean
+	@echo targets: test bench publish clean
 
 dev_venv:
 	virtualenv -q dev_venv

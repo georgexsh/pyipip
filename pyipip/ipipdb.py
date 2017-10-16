@@ -66,7 +66,7 @@ class IPIPDatabase(object):
     def _load_db(self, buff, index_size, text_length_size):
         ns_buff = []
         ns_offset = 0
-        offset_old_to_new= {}
+        offset_old_to_new = {}
         text_start = unpack_uint32_big(buff[:4]) - index_size
         offset = index_size + 4
         while offset < text_start:
