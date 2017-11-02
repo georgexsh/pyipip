@@ -8,7 +8,12 @@ ipip.net IPv4 地址归属地数据库 Python 查询库。同时支持 dat 与 d
 格式的数据文件，支持 Python 2 与 3。 需要先去 `ipip.net
 官方网站 <http://www.ipip.net/>`__ 下载数据文件。
 
-性能较官方库为高，在 E5-2682 2.5GHz 下 QPS 约为 490k。
+性能较官方库为高，在 E5-2682 2.5GHz 下 QPS 约为 490k::
+
+    pyipip 491507.74
+    lxyu 101062.99
+    official 5701.01
+
 
 Usage
 -----
