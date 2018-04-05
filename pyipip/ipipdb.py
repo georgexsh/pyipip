@@ -19,12 +19,15 @@ logger = logging.getLogger(__name__)
 IS_PY3 = sys.version_info[0] == 3
 IS_PYPY = platform.python_implementation() == 'PyPy'
 
-unpack_uint32_little = lambda b: struct.unpack("<L", b)[0]
-unpack_uint32_big = lambda b: struct.unpack(">L", b)[0]
-unpack_uint16_big = lambda b: struct.unpack(">H", b)[0]
 if IS_PY3:
+    unpack_uint32_little = lambda b: int.from_bytes(b, 'little', signed=False)
+    unpack_uint32_big = lambda b: int.from_bytes(b, 'big', signed=False)
+    unpack_uint16_big = lambda b: int.from_bytes(b, 'big', signed=False)
     unpack_uint8 = lambda b: b
 else:
+    unpack_uint32_little = lambda b: struct.unpack("<L", b)[0]
+    unpack_uint32_big = lambda b: struct.unpack(">L", b)[0]
+    unpack_uint16_big = lambda b: struct.unpack(">H", b)[0]
     unpack_uint8 = lambda b: struct.unpack("B", b)[0]
 
 
