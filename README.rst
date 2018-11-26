@@ -1,6 +1,13 @@
 PyIPIP
 ======
 
+.. image:: https://travis-ci.org/georgexsh/pyipip.svg?branch=master
+   :target: https://travis-ci.org/georgexsh/pyipip
+
+.. image:: https://img.shields.io/pypi/v/pyipip.svg
+   :target: https://pypi.org/project/pyipip/
+
+
 Description
 -----------
 
